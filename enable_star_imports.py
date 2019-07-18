@@ -52,7 +52,7 @@ for item in __all__:
         enable_star_imports(os.path.join(path, folder))
 
 def main():
-    enable_star_imports(os.path.dirname(os.path.abspath(__file__)))
+    enable_star_imports(os.path.join(os.getcwd(), 'clarify'))
 
 if __name__ == "__main__":
     sys.exit(main())
