@@ -1,5 +1,6 @@
 import os
 import logging
+import sys
 
 transformer_string = """
 from clarify.enable_star_imports import CodeFactory
@@ -50,6 +51,8 @@ for item in __all__:
     for folder in folders:
         enable_star_imports(os.path.join(path, folder))
 
+def main():
+    enable_star_imports(os.path.dirname(os.path.abspath(__file__)))
 
 if __name__ == "__main__":
-    enable_star_imports(os.path.dirname(os.path.abspath(__file__)))
+    sys.exit(main())
