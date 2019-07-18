@@ -2,3 +2,4 @@
   name: enable_star_imports
   entry: enable_star_imports
   language: python
+  rev: 1.0.0
