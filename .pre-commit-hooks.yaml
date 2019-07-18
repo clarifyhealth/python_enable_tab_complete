@@ -1,4 +1,4 @@
 - id: enable_star_imports
   name: enable_star_imports
-  entry: enable_star_imports.py
+  entry: enable_star_imports
   language: python_venv
