@@ -42,23 +42,26 @@ for item in __all__:
     path_contains_folder = len(folders) > 0
 
     differ = Differ()
-    with open(init_file_name, 'r') as read_file:
+    try:
+        with open(init_file_name, 'r') as read_file:
 
-        def compare_overwrite(write_contents):
-            current_text = read_file.read()
-            if current_text != write_contents:
-                print(f"writing to {init_file_name}")
-                pprint(list(differ.compare(current_text.splitlines(keepends=True),
-                                           write_contents.splitlines(keepends=True))))
-                with open(init_file_name, 'w+') as write_file:
-                    write_file.write(write_contents)
+            def compare_overwrite(write_contents):
+                current_text = read_file.read()
+                if current_text != write_contents:
+                    print(f"writing to {init_file_name}")
+                    pprint(list(differ.compare(current_text.splitlines(keepends=True),
+                                               write_contents.splitlines(keepends=True))))
+                    with open(init_file_name, 'w+') as write_file:
+                        write_file.write(write_contents)
 
-        if path_contains_transformer and not path_contains_folder:
-            compare_overwrite(transformer_string)
-        elif path_contains_transformer and path_contains_folder:
-            compare_overwrite(transformer_string + init_contents)
-        elif non_special_objects:
-            compare_overwrite(init_contents)
+            if path_contains_transformer and not path_contains_folder:
+                compare_overwrite(transformer_string)
+            elif path_contains_transformer and path_contains_folder:
+                compare_overwrite(transformer_string + init_contents)
+            elif non_special_objects:
+                compare_overwrite(init_contents)
+    except FileNotFoundError:
+        raise Exception(f"You probably have an empty dir or set of empty dirs at {path}. Delete them.")
 
     for folder in folders:
         enable_star_imports(os.path.join(path, folder))
