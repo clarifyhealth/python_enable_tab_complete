@@ -76,7 +76,13 @@ for item in __all__:
             elif non_special_objects:
                 compare_overwrite(init_contents)
     except FileNotFoundError:
-        raise Exception(f"You probably have an empty dir or set of empty dirs at {path}. Delete them.")
+        with open(init_file_name, 'w+') as write_file:
+            if path_contains_transformer and not path_contains_folder:
+                write_file.write(transformer_string)
+            elif path_contains_transformer and path_contains_folder:
+                write_file.write(transformer_string + init_contents)
+            elif non_special_objects:
+                write_file.write(init_contents)
 
     for folder in folders:
         enable_star_imports(os.path.join(path, folder))
