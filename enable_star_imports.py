@@ -1,8 +1,8 @@
 import os
-import logging
 import sys
 from difflib import Differ
 from pprint import pprint
+from shutil import rmtree
 
 transformer_string = """
 from clarify.enable_star_imports import CodeFactory
@@ -15,6 +15,21 @@ class Code(CodeFactory):
         super().__init__(parameters, progress_logger, verify_count_remains_same)
 
 """
+
+
+def delete_empty_dirs(path):
+
+    def is_path_empty(directory):
+        for dir_tuple in os.walk(directory):
+            if [file for file in dir_tuple[2] if not file.startswith(('__', '.'))]:
+                return False
+        return True
+
+    for path_tuple in os.walk(path):
+        current_path = os.path.join(path, path_tuple[0])
+        if is_path_empty(current_path):
+            print(f"removing {current_path}")
+            rmtree(current_path)
 
 
 def enable_star_imports(path):
@@ -66,8 +81,11 @@ for item in __all__:
     for folder in folders:
         enable_star_imports(os.path.join(path, folder))
 
+
 def main():
+    delete_empty_dirs(os.path.join(os.getcwd(), 'clarify'))
     enable_star_imports(os.path.join(os.getcwd(), 'clarify'))
+
 
 if __name__ == "__main__":
     sys.exit(main())
