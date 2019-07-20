@@ -31,8 +31,15 @@ def delete_empty_dirs(path):
         else:
             current_path = os.path.join(path, path_tuple[0])
             if is_path_empty(current_path):
-                print(f"removing {current_path}")
-                rmtree(current_path)
+                try:
+                    print(f"removing {current_path}")
+                    rmtree(current_path)
+                except FileNotFoundError:
+                    # The os.walk will generate keys under a dir, but by the time it reaches them,
+                    # they may have been deleted by a previous call of the program. Hence,
+                    # this will try to delete some files twice, which results in an error that
+                    # i am ignoring here.
+                    pass
 
 
 def enable_star_imports(path):
