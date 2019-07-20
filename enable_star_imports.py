@@ -21,15 +21,18 @@ def delete_empty_dirs(path):
 
     def is_path_empty(directory):
         for dir_tuple in os.walk(directory):
-            if [file for file in dir_tuple[2] if not file.startswith(('__', '.'))]:
+            if [file for file in dir_tuple[2] if not (file.startswith(('__', '.')) or file.endswith('.pyc'))]:
                 return False
         return True
 
     for path_tuple in os.walk(path):
-        current_path = os.path.join(path, path_tuple[0])
-        if is_path_empty(current_path):
-            print(f"removing {current_path}")
-            rmtree(current_path)
+        if path_tuple[0].endswith('__pycache__'):
+            pass
+        else:
+            current_path = os.path.join(path, path_tuple[0])
+            if is_path_empty(current_path):
+                print(f"removing {current_path}")
+                rmtree(current_path)
 
 
 def enable_star_imports(path):
