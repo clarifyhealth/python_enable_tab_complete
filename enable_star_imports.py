@@ -44,7 +44,7 @@ def delete_empty_dirs(path):
 
 def enable_star_imports(path):
     all_objects_in_path = os.listdir(path)
-    non_special_objects = [d for d in all_objects_in_path if not d.startswith(('_', '.'))]
+    non_special_objects = [d for d in all_objects_in_path if not d.startswith(('_', '.')) and not d.startswith('drgpy')]
     folders = [f for f in non_special_objects if '.' not in f and len(os.listdir(os.path.join(path, f))) != 0]
     folders.sort()
     python_files = [f.replace('.py', '') for f in non_special_objects if f.endswith('.py')]
