@@ -1,7 +1,5 @@
 import os
 import sys
-from difflib import Differ
-from pprint import pprint
 from shutil import rmtree
 import re
 
