@@ -37,6 +37,14 @@ def enable_star_imports(path):
     transformer_file_indicators = ('.sql', '.json', '.csv', 'calculate.py')
     path_contains_transformer = len([file for file in files if file.endswith(transformer_file_indicators)]) > 0
 
+    init_file = '__init__.py'
+    if init_file in all_objects_in_path:
+        init_file = os.path.join(path, init_file)
+        with open(init_file, 'r') as readfile:
+            if readfile.readlines():
+                with open(init_file, 'w+') as writefile:
+                    writefile.write("")
+
     def write_transformer(file_name):
         transformer_reader_class_name = ''.join([s.title() for s in file_name.split('_')])
         transformer_reader_string = f"""
