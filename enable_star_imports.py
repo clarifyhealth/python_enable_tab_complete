@@ -62,9 +62,13 @@ class {transformer_reader_class_name}(CodeFactory):
             with open(os.path.join(path, file_name + '.py'), 'w+') as file:
                 file.write(transformer_reader_string)
 
-    if 'features/' in path or 'data_sources/' in path or 'ccgs/' in path:
+    supported_library = ['features/', 'data_sources/', 'ccgs/', 'filters/']
+    if any(s in path for s in supported_library):
         if 'features/' in path:
             transformer_reader_file_name = path[re.search(r'/clarify/library/features/', path).end():].replace('/', '_')
+            write_transformer(transformer_reader_file_name)
+        elif 'filters/' in path:
+            transformer_reader_file_name = path[re.search(r'/clarify/library/filters/', path).end():].replace('/', '_')
             write_transformer(transformer_reader_file_name)
         elif 'ccgs/' in path:
             transformer_reader_file_name = path[re.search(r'/clarify/library/ccgs/', path).end():].replace('/', '_')
