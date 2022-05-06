@@ -48,7 +48,7 @@ def enable_star_imports(path):
     def write_transformer(file_name):
         transformer_reader_class_name = ''.join([s.title() for s in file_name.split('_')])
         transformer_reader_string = f"""
-from clarify.enable_star_imports import CodeFactory
+from clarify.common.enable_star_imports import CodeFactory
 from clarify.library.progress_logger import ProgressLogger
 import os
 
