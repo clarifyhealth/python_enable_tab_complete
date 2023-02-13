@@ -31,7 +31,7 @@ def delete_empty_dirs(path):
 
 def enable_star_imports(path):
     all_objects_in_path = os.listdir(path)
-    non_special_objects = [d for d in all_objects_in_path if not d.startswith(('_', '.')) and not d.startswith('drgpy')]
+    non_special_objects = [d for d in all_objects_in_path if not d.startswith(('_', '.')) and not d.startswith('drgpy') and not d.startswith('Dockerfile')]
     folders = [f for f in non_special_objects if '.' not in f and len(os.listdir(os.path.join(path, f))) != 0]
     files = [f for f in all_objects_in_path if '.' in f and not f.startswith('_')]
     transformer_file_indicators = ('.sql', '.json', '.csv', 'calculate.py')
